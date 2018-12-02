@@ -11,10 +11,10 @@ namespace Snake
         public int x;
         public int y;
         public char sym;
-        /*Сработает, если не подать аргументов в функцию*/
+        
         public Point()
         {
-            Console.WriteLine("Создается новая точка");
+            /*Сработает, если не подать аргументов в функцию*/
         }
         /*Хочу при создании класса точки сразу задавать её вид и коортинады*/
         public Point(int _x,int _y, char _sym)
