@@ -13,7 +13,7 @@ namespace Snake
 {
     class Snake : Figure
     {
-        Direction direction;
+        Direction direction; //если добавить public - дали доступ к переменной остальным подпрограммам
 
         public Snake(Point tail, int length, Direction _direction)
         {
@@ -45,6 +45,26 @@ namespace Snake
             Point nextPoint = new Point(head);
             nextPoint.Move(1, direction);
             return nextPoint;
+        }
+        //Изменение направления змейки по нажатию клавиши
+        public void HandleKey(ConsoleKey key)
+        {
+            if (key == ConsoleKey.LeftArrow)
+            {
+                direction = Direction.LEFT;
+            }
+            else if (key == ConsoleKey.RightArrow)
+            {
+                direction = Direction.RIGHT;
+            }
+            else if (key == ConsoleKey.UpArrow)
+            {
+                direction = Direction.UP;
+            }
+            else if (key == ConsoleKey.DownArrow)
+            {
+                direction = Direction.DOWN;
+            }
         }
     }
 }
