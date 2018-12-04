@@ -38,7 +38,22 @@ namespace Snake
             head.Draw();
         }
 
-//Генерируем точку, следующую после головы в заданном направлении (двигаем змейку)
+        internal bool Eat(Point food)
+        {
+            Point head = GetNextPoint();
+            if (head.IsHit(food)) //Если змейка наступила на еду (если координаты нового шага змейки равны координатам, где лежит еда
+            {
+                food.sym = head.sym;
+                pList.Add(food);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //Генерируем точку, следующую после головы в заданном направлении (двигаем змейку)
         public Point GetNextPoint()
         {
             Point head = pList.Last();
