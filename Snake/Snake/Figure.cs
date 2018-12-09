@@ -18,5 +18,26 @@ namespace Snake
                 p.Draw();
             }
         }
+
+        /*полиморфизм на уровне методов*/
+        internal bool IsHit(Figure figure)
+        {
+            foreach (var p in pList) //передан список точек линии, который генерируется при её создании
+            {
+                if (figure.IsHit(p))
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsHit(Point point)
+        {
+            foreach(var p in pList)//передал точку стенки и хочу узнать, врезалась ли змейка в стенку
+            {
+                if (p.IsHit(point))
+                    return true;
+            }
+            return false;
+        }
     }
 }
