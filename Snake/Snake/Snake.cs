@@ -27,6 +27,17 @@ namespace Snake
             }
         }
 
+        internal bool IsHitTail()
+        {
+            var head = pList.Last();//получаем координаты головной точки
+            for (int i=0; i<pList.Count-2; i++) //от первой точки до точки, предшествующей голове
+            {
+                if (head.IsHit(pList[i]))
+                    return true;
+            }
+            return false;
+        }
+
         internal void Move()
         {
             Point tail = pList.First(); //Выдаёт первый элемент списка
