@@ -11,53 +11,33 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            Console.SetBufferSize(80, 25); /*Устанавливает размер окна*/
+/*Полиморфизм*/
+            VerticalLine v1 = new VerticalLine(0, 10, 5, '%');
+            Draw(v1); //т.к. вертикальная линия ещё и фигура, функция, принимающая фигуру, сработает
 
-/*Наследование - св-во системы, позволяющее описать новый класс на основе уже существующего с частично или полностью замещающейся функциональностью*/
-            //Создаём рамку
-            HorizontalLine topLine = new HorizontalLine(0, 78, 0,'+');
-            HorizontalLine botLine = new HorizontalLine(0, 78, 24, '+');
-            VerticalLine leftLine = new VerticalLine(0, 24, 0, '+');
-            VerticalLine rightLine = new VerticalLine(0, 24, 78, '+');
-
-            //Рисуем рамку
-            topLine.Draw();
-            botLine.Draw();            
-            leftLine.Draw();            
-            rightLine.Draw();
-
-            //Рисуем змейку
             Point p = new Point(4, 5, '*');
-            Snake snake = new Snake(p, 4, Direction.RIGHT);
-            snake.Draw();
+            Figure fSnake = new Snake(p, 4, Direction.RIGHT); //fSnake рассматривается как фигура и методы класса Snake работать не будут
+            Draw(fSnake);
+            Snake snake = (Snake)fSnake;//Явное приведение типа - конвертирует фигуру fSnake в элемент класса Snake
 
-            FoodCreator foodCreator = new FoodCreator(80, 25, '$');
-            Point food = foodCreator.CreateFood();
-            food.Draw();
+            HorizontalLine h1 = new HorizontalLine(0, 5, 6, '&');
 
-            while (true)
+            List<Figure> figures = new List<Figure>();
+            figures.Add(fSnake);
+            figures.Add(v1);
+            figures.Add(h1);
+            //Список фигур может хранить все эти элементы, т.к. они являются ещё и фигурами
+
+            foreach (var f in figures)
             {
-                if (snake.Eat(food))
-                {
-                    food = foodCreator.CreateFood();
-                    food.Draw();
-                }
-                else
-                {
-                    snake.Move();
-                }
-
-                Thread.Sleep(100);
-
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey();
-                    snake.HandleKey(key.Key);                  
-                }
+                f.Draw();/*у всех наследников класса фигуры есть этот метод. Метод можно изменить для какой-то конкретной фигуры*/
             }
+            Console.ReadLine();
 
-            //Console.ReadLine();
-            
+        }
+        static void Draw (Figure figure)
+        {
+            figure.Draw();
         }
     }
 }
