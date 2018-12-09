@@ -11,7 +11,7 @@ namespace Snake
     {
         protected List<Point> pList; //идентификатор доступа. Даёт наследникам видеть переменную
 
-        public void Draw()
+        public virtual void Draw() //Любой наследник может переопределить этот метод
         {
             foreach (Point p in pList)
             {
