@@ -13,30 +13,30 @@ namespace Snake
         {
             Console.SetBufferSize(80, 25); /*Устанавливает размер окна*/
 
-/*Наследование - св-во системы, позволяющее описать новый класс на основе уже существующего с частично или полностью замещающейся функциональностью*/
-            //Создаём рамку
-            HorizontalLine topLine = new HorizontalLine(0, 78, 0,'+');
-            HorizontalLine botLine = new HorizontalLine(0, 78, 24, '+');
-            VerticalLine leftLine = new VerticalLine(0, 24, 0, '+');
-            VerticalLine rightLine = new VerticalLine(0, 24, 78, '+');
-
+            Walls walls = new Walls(80, 25);
             //Рисуем рамку
-            topLine.Draw();
-            botLine.Draw();            
-            leftLine.Draw();            
-            rightLine.Draw();
+            walls.Draw();
+
 
             //Рисуем змейку
             Point p = new Point(4, 5, '*');
             Snake snake = new Snake(p, 4, Direction.RIGHT);
             snake.Draw();
 
+            //Рисуем еду
             FoodCreator foodCreator = new FoodCreator(80, 25, '$');
             Point food = foodCreator.CreateFood();
             food.Draw();
 
             while (true)
             {
+                if ( walls.IsHit(snake)|| snake.IsHitTail() ) //змейка столкнулась со стеной или с хвостом
+                {
+                    Console.Clear();
+                    Console.SetCursorPosition(36, 12);
+                    Console.WriteLine("Game over!");
+                    break;
+                }
                 if (snake.Eat(food))
                 {
                     food = foodCreator.CreateFood();
@@ -48,7 +48,6 @@ namespace Snake
                 }
 
                 Thread.Sleep(100);
-
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey();
@@ -56,7 +55,7 @@ namespace Snake
                 }
             }
 
-            //Console.ReadLine();
+            Console.ReadLine();
             
         }
     }
